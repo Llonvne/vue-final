@@ -10,6 +10,8 @@
   "dependencies": {
     "@cycjimmy/vue-h5-audio-controls": "^1.2.0",
     "@nutui/nutui": "^2.3.12",
+    "ax": "^0.2.2",
+    "axios": "^1.2.0",
     "core-js": "^3.8.3",
     "cube-ui": "^1.12.47",
     "vue": "^2.6.14",

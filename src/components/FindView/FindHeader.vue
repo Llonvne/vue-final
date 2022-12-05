@@ -20,7 +20,7 @@
 <script>
 import ListenToKnow from "@/components/FindView/ListenToKnow.vue";
 import PopUpNav from "@/components/FindView/PopUpNav.vue";
-import SearchComponent from "@/components/FindView/SearchComponent.vue";
+import SearchComponent from "@/components/SearchComponent.vue";
 
 export default {
   name: "FindHeader",

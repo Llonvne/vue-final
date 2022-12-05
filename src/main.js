@@ -5,9 +5,9 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
+// 全局引入 Vant 依赖
 import Vant from "vant";
 import "vant/lib/index.css";
-
 Vue.use(Vant);
 
 new Vue({

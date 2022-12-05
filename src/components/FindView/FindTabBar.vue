@@ -2,7 +2,7 @@
   <div>
     <van-grid :border="false" :column-num="tabs.length">
       <van-grid-item v-for="(tab, index) in tabs" :key="index">
-        <van-icon :name="tab.iconName"></van-icon>
+        <van-icon :name="tab.iconName" :color="color" size="1.7rem"></van-icon>
         <a :href="tab.url">
           <div
             :style="{
@@ -21,7 +21,7 @@
 <script>
 export default {
   name: "FindTabBar",
-  props: ["tabs"],
+  props: ["tabs", "color"],
 };
 </script>
 

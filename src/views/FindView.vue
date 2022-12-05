@@ -2,7 +2,7 @@
   <div>
     <FindHeader></FindHeader>
     <FindImages :images="images"></FindImages>
-    <FindTabBar :tabs="tabs"></FindTabBar>
+    <FindTabBar :tabs="tabs" color="#ee0a24"></FindTabBar>
     <FindRecommend :recommends="recommends" title="推荐歌单"></FindRecommend>
     <FindHighlights
       :items="highlights"
