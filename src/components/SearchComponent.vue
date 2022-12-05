@@ -36,19 +36,14 @@
       <div v-else>
         <FindTabBar :tabs="tabs" color="#1989fa"></FindTabBar>
         <div>历史</div>
-        <van-button
-          v-for="(history, index) in $store.getters['search/getHistory']"
-          :key="index"
-          color="#202023"
-          hairline="true"
-          plain
-          round
-          size="small"
-          type="info"
-          @click="doSearch(history)"
-        >
-          {{ history }}
-        </van-button>
+        <v-chip-group>
+          <v-chip
+            v-for="(item, index) in $store.getters['search/getHistory']"
+            :key="index"
+            @click="doSearch(item)"
+            >{{ item }}
+          </v-chip>
+        </v-chip-group>
 
         <van-tabs v-model="active">
           <van-tab title="热搜榜">
