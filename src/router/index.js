@@ -1,23 +1,30 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  //   默认导航到发现页面
   {
+    name: "find",
     path: "/",
-    name: "home",
-    component: HomeView,
+    redirect: "/find",
+  },
+  //   配置发现页面
+  {
+    name: "find",
+    path: "/find",
+    component: () => import("../views/FindView.vue"),
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    name: "my",
+    path: "/my",
+    component: () => import("../views/MyView.vue"),
+  },
+  {
+    name: "star",
+    path: "/star",
+    component: () => import("../views/StarView.vue"),
   },
 ];
 

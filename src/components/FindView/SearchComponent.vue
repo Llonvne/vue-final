@@ -1,0 +1,18 @@
+<template>
+  <div>
+    <van-search v-model="value" placeholder="请输入搜索关键词" />
+  </div>
+</template>
+
+<script>
+export default {
+  name: "SearchComponent",
+  data() {
+    return {
+      value: "",
+    };
+  },
+};
+</script>
+
+<style scoped></style>

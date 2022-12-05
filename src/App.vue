@@ -1,32 +1,31 @@
 <template>
   <div id="app">
+    <!--显示内容-->
+    <router-view></router-view>
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <!-- 通过 v-model 绑定到 active 变量，用于检测检测页面切换-->
+      <van-tabbar v-model="active" active-color="#ee0a24" inactive-color="#000">
+        <van-tabbar-item icon="music-o" replace to="/find"
+          >发现</van-tabbar-item
+        >
+        <van-tabbar-item icon="user-o" replace to="/my">我的</van-tabbar-item>
+        <van-tabbar-item icon="like-o" replace to="/star">关注</van-tabbar-item>
+      </van-tabbar>
     </nav>
-    <router-view />
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      active: 0,
+    };
+  },
+  methods: {},
+  mounted() {},
+};
+</script>
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<style></style>
