@@ -13,14 +13,41 @@ export default new Vuex.Store({
     music: {
       namespaced: true,
       state: () => ({
-        audio: document.createElement("audio"),
+        audio: new Audio(),
+        curplay: {},
+        current: 0,
+        currentSec: 0,
       }),
       mutations: {
         play(state) {
           state.audio.play();
         },
-        setUrl(state, url) {
-          state.audio.src = url;
+        setUrl(state, music) {
+          if (state.audio.paused !== undefined && !state.audio.paused) {
+            state.audio.pause();
+          }
+          state.audio = new Audio(music.music);
+          state.curplay = music;
+          state.audio.addEventListener("timeupdate", () => {
+            state.current = state.audio.currentTime;
+            state.currentSec = state.audio.currentTime;
+
+            let timeDisplay = Math.floor(state.audio.currentTime);
+            let min = timeDisplay / 60;
+            let minI = parseInt(min);
+            if (minI < 10) {
+              minI = "0" + minI.toString();
+            }
+
+            let sec = timeDisplay % 60;
+            let secs = Math.round(sec);
+            if (parseInt(secs) < 10) {
+              secs = "0" + secs.toString();
+            } else {
+              secs = secs.toString();
+            }
+            state.current = minI + ":" + secs;
+          });
         },
         pause(state) {
           state.audio.pause();
@@ -30,6 +57,13 @@ export default new Vuex.Store({
         },
       },
       actions: {},
+      getters: {
+        curplay: (state) => state.curplay,
+        audio: (state) => state.audio,
+        current: (state) => state.current,
+        hasMusic: (state) => state.curplay.name === undefined,
+        playrate: (state) => (state.currentSec / state.audio.duration) * 100,
+      },
     },
     musicBank: {
       namespaced: true,
@@ -71,6 +105,7 @@ export default new Vuex.Store({
       getters: {
         byName: (state) => (name) =>
           state.bank.filter((music) => music.name.includes(name)),
+        bank: (state) => state.bank,
       },
     },
     user: {
@@ -78,10 +113,12 @@ export default new Vuex.Store({
       state: () => ({
         avatarUrl: "/user/avatar.jpg",
         username: "Llonvne",
+        messageBox: [],
       }),
       getters: {
         getAvatar: (state) => state.avatarUrl,
         getUsername: (state) => state.username,
+        getMessageBox: (state) => state.messageBox,
       },
     },
     search: {
@@ -116,12 +153,23 @@ export default new Vuex.Store({
     hotlist: {
       state: () => ({
         search: getHotList(),
-        topic: [],
-        news: [],
-        origin: [],
       }),
       getters: {
         getSearch: (state) => state.search,
+      },
+    },
+    popupnav: {
+      namespaced: true,
+      state: () => ({
+        shownav: false,
+      }),
+      getters: {
+        getShowNav: (state) => state.shownav,
+      },
+      mutations: {
+        setShowNav(state, value) {
+          state.shownav = value;
+        },
       },
     },
   },

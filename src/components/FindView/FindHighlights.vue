@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="color: #7f7f7f; font-size: 14px">{{ title }}></div>
+    <v-subheader>{{ title }}</v-subheader>
     <van-cell-group inset>
       <van-cell
         v-for="(item1, index) in items"

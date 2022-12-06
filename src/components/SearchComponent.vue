@@ -1,12 +1,18 @@
 <template>
   <div>
     <van-search
+      v-if="!hidden"
       disabled
       placeholder="请输入搜索关键词"
       @click="$store.commit('search/setShowSearch', true)"
     />
 
-    <van-popup v-model="search" :style="{ height: '100%' }" position="bottom">
+    <van-popup
+      :style="{ height: '100%' }"
+      :value="$store.getters['search/getShowSearch']"
+      get-container="#app"
+      position="bottom"
+    >
       <van-nav-bar title="搜索" @click-left="left">
         <template #left>
           <van-icon color="#A3A3A3" name="arrow-left" size="18" />
@@ -18,10 +24,12 @@
         autofocus
         placeholder="请输入搜索关键词"
         @cancel="onCancel"
+        @focus="showres = true"
+        @focusout="showres = false"
         @search="onSearch"
       />
 
-      <van-cell-group v-if="value.trim() !== ''">
+      <van-cell-group v-if="value">
         <van-card
           v-for="(music, index) in result"
           :key="index"
@@ -29,7 +37,7 @@
           :tag="music.tag"
           :thumb="music.image"
           :title="music.name"
-          @click="play(music.music)"
+          @click="play(music)"
         />
       </van-cell-group>
 
@@ -72,6 +80,11 @@ import HotList from "@/components/HotList.vue";
 export default {
   name: "SearchComponent",
   components: { HotList, FindTabBar },
+  props: {
+    hidden: {
+      default: false,
+    },
+  },
   data() {
     return {
       value: "",
@@ -83,17 +96,10 @@ export default {
         new FindTab("hot", "识曲", "https://www.baidu.com"),
       ],
       active: 0,
+      snackbar: false,
+      text: "",
+      showres: false,
     };
-  },
-  computed: {
-    search: {
-      get() {
-        return this.$store.getters["search/getShowSearch"];
-      },
-      set(val) {
-        this.$store.commit("search/setShowSearch", val);
-      },
-    },
   },
   methods: {
     doSearch(value) {
@@ -101,21 +107,32 @@ export default {
       this.onSearch();
     },
     left() {
-      this.search = false;
+      this.$store.commit("search/setShowSearch", false);
       this.value = "";
       this.result = [];
     },
     onSearch() {
-      this.$store.commit("search/addHistory", this.value);
+      if (this.value === "") {
+        return;
+      }
       this.result = this.$store.getters["musicBank/byName"](this.value);
+      if (this.result.length >= 1) {
+        this.$store.commit("search/addHistory", this.value);
+      }
     },
-    play(url) {
-      this.$store.commit("music/setUrl", url);
+    play(music) {
+      console.log("play..");
+      this.$store.commit("music/setUrl", music);
       this.$store.commit("music/play");
+      this.left();
     },
     onCancel() {
-      this.value = "";
       this.result = [];
+    },
+  },
+  watch: {
+    value(newValue) {
+      this.doSearch(newValue);
     },
   },
 };

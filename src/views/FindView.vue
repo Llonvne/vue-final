@@ -13,6 +13,7 @@
       title="Llonvne 的雷达歌单"
     ></FindRecommend>
     <FindHighlights :items="popularPodcast" title="热门播客"></FindHighlights>
+    <ButtomNav></ButtomNav>
   </div>
 </template>
 
@@ -25,11 +26,13 @@ import FindTabBar from "@/components/FindView/FindTabBar.vue";
 import FindRecommend from "@/components/FindView/FindRecommend.vue";
 import FindHighlights from "@/components/FindView/FindHighlights.vue";
 import FindRecommendItem from "@/FindRecommendItem";
+import ButtomNav from "@/components/ButtomNav.vue";
 
 export default {
   name: "FindView",
   methods: {},
   components: {
+    ButtomNav,
     FindHighlights,
     FindRecommend,
     FindTabBar,
@@ -38,6 +41,7 @@ export default {
   },
   data() {
     return {
+      value: 1,
       images: [
         new ImageWithURL("/find_1.jpg", "https://www.baidu.com"),
         new ImageWithURL("/find_2.jpg", "https://www.baidu.com"),

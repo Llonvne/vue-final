@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="color: #7f7f7f; font-size: 14px">{{ title }}></div>
+    <v-subheader>{{ title }}</v-subheader>
     <van-grid :border="false" :column-num="recommends.length">
       <van-grid-item v-for="(item, index) in recommends" :key="index">
         <FindRecommendItem :item="item"></FindRecommendItem>

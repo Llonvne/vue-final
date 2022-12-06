@@ -6,12 +6,19 @@
       title="立即分享给好友"
       @select="onSelect"
     />
-    <van-cell icon="wap-nav" @click="showPopup"></van-cell>
+    <van-cell
+      v-if="!hidden"
+      center
+      icon="wap-nav"
+      @click="showPopup"
+    ></van-cell>
     <van-popup
-      v-model="show"
       :style="{ height: '100%', width: '80%' }"
+      :value="$store.getters['popupnav/getShowNav']"
+      get-container="#app"
       position="left"
       round
+      @click-overlay="onClose"
     >
       <div>
         <br />
@@ -109,9 +116,17 @@
 <script>
 export default {
   name: "PopUpNav",
+  props: {
+    ishow: {
+      default: false,
+    },
+    hidden: {
+      default: false,
+    },
+  },
   data() {
     return {
-      show: false,
+      showShare: false,
       options: [
         { name: "微信", icon: "wechat" },
         { name: "微博", icon: "weibo" },
@@ -119,19 +134,22 @@ export default {
         { name: "分享海报", icon: "poster" },
         { name: "二维码", icon: "qrcode" },
       ],
-      showShare: false,
       blackMode: false,
     };
   },
   methods: {
     showPopup() {
-      this.show = true;
+      this.$store.commit("popupnav/setShowNav", true);
     },
     // eslint-disable-next-line no-unused-vars
     onSelect(option) {
       this.showShare = false;
     },
+    onClose() {
+      this.$store.commit("popupnav/setShowNav", false);
+    },
   },
+  mounted() {},
 };
 </script>
 
