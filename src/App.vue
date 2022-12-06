@@ -1,7 +1,3 @@
-<head>
-<title>这一个网站</title>
-Access-Control-Allow-Origin:*
-</head>
 <template>
   <div id="app">
     <v-app>

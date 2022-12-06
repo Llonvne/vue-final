@@ -123,7 +123,7 @@ export default {
     play(music) {
       console.log("play..");
       this.$store.commit("music/setUrl", music);
-      this.$store.commit("music/play");
+      this.$store.dispatch("music/play");
       this.left();
     },
     onCancel() {

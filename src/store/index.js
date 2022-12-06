@@ -19,15 +19,9 @@ export default new Vuex.Store({
         currentSec: 0,
       }),
       mutations: {
-        play(state) {
-          state.audio.play();
-        },
         setUrl(state, music) {
-          if (state.audio.paused !== undefined && !state.audio.paused) {
-            state.audio.pause();
-          }
-          state.audio = new Audio(music.music);
           state.curplay = music;
+          state.audio.src = music.music;
           state.audio.addEventListener("timeupdate", () => {
             state.current = state.audio.currentTime;
             state.currentSec = state.audio.currentTime;
@@ -49,20 +43,26 @@ export default new Vuex.Store({
             state.current = minI + ":" + secs;
           });
         },
-        pause(state) {
-          state.audio.pause();
-        },
         reset(state, time) {
           state.audio.currentTime = time;
         },
       },
-      actions: {},
+      actions: {
+        play(context) {
+          context.state.audio.play();
+        },
+        pause(context) {
+          context.state.audio.pause();
+        },
+      },
       getters: {
         curplay: (state) => state.curplay,
         audio: (state) => state.audio,
         current: (state) => state.current,
         hasMusic: (state) => state.curplay.name === undefined,
         playrate: (state) => (state.currentSec / state.audio.duration) * 100,
+        musicLength: (state) => state.audio.duration,
+        currentSec: (state) => state.currentSec,
       },
     },
     musicBank: {
